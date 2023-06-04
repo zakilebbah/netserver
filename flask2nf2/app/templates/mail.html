@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoutiqueFact</title>
+    <style>
+        /* .container {
+            border: 1px solid gray;
+            margin: auto;
+            width: 620px;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            object-position: 50% 50%;
+            display:block;
+            margin:auto;
+        }
+        td {
+            text-align: center;
+            margin: 10px;
+        }
+        th {
+            text-align: center;
+            margin: 10px;
+            background-color: gainsboro;
+        }
+        table {
+            border: 1px solid gray;
+            text-align: center;
+            border-spacing: 5px;
+            margin: auto;
+            width: 95%;
+        }
+        .name {
+            max-width: 250px;
+        }
+        .name p {
+            white-space: initial;
+            overflow: hidden;
+        }
+        p {
+            margin: 5px;
+        }
+        .end {
+            width: 90px;
+        }
+        .tableTitle {
+            font-weight: bold;
+        }
+        .total span {
+            font-weight: bold;
+        }
+        .logo {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid gray;
+        }
+        .logo img {
+            margin: auto;
+            width: 155px;
+            height: 45px;
+            object-fit: fill;
+            object-position: 50% 50%;
+            border-radius: 5px 5px 5px 5px;
+            border: 0px solid #000000;
+        } */
+    </style>
+</head>
+<body>
+    <div class="container" style="border: 1px solid gray;
+    margin: auto;
+    width: 620px;">
+        <div style="padding: 10px;text-align: center;border-bottom: 1px solid gray;">
+            <img style="margin: auto;width: 180px;height: 120px;object-fit: contain;object-position: 50% 50%;border-radius: 5px 5px 5px 5px;border: 0px solid #000000;" src={{logo}} alt="logo">
+        </div>
+        <div class="title">
+            <p style="margin: 5px;">Cher {{name}}</p>
+        </div>
+        <div class="title">
+            <p style="margin: 5px;">email {{user.EMAIL}}</p>
+        </div>
+        <h2 style="font-weight: bold;margin: 5px;">Votre commande pour:</h2>
+        <table style="border: 1px solid gray;text-align: center;border-spacing: 5px;margin: auto;width: 95%;">
+            <tr>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;"></th>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;">PRODUIT</th>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;width: 90px;" >QUANTITE</th>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;width: 90px;" >PRIX</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td style="text-align: center;margin: 10px;"><img src={{product.PRODUCT.images[0]}} alt={{product.PRODUCT.DESIGNATION}} style="width: 100px;height: 100px;object-fit: contain;object-position: 50% 50%;display:block;margin:auto;"></td>
+                <td style="text-align: center;margin: 10px;max-width: 250px;"><p style="white-space: initial;overflow: hidden;margin: 5px;">{{ product.PRODUCT.DESIGNATION }}</p></td>
+                <td style="text-align: center;margin: 10px;"><p style="margin: 5px;">{{ product.QTE.qte }}</p></td>
+                <td style="text-align: center;margin: 10px;"><p style="margin: 5px;">{{ product.PRICE }} DA</p></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if piece.MONTANT15 %}
+        <p style="margin: 5px;">Sous Total: <span style="font-weight: bold;">{{piece.MONTANT15}}</span></p>
+        {% endif %}
+        {% if piece.CODE_MODE_LIV == 'YALID' %}
+        <p style="margin: 5px;">Livraison par <span style="font-weight: bold;">Yalidine</span></p>
+        {% endif %}
+        {% if piece.MONTANT07 %}
+        <p style="margin: 5px;">Frais livraison: <span style="font-weight: bold;">{{piece.MONTANT07}}</span></p>
+        {% endif %}
+        <p style="margin: 5px;">TOTAL: <span style="font-weight: bold;">{{piece.MONTANT}}</span></p>
+        <!-- <p style="margin: 5px;">Code: <span style="font-weight: bold;">{{code}}</span></p> -->
+        {% if piece.CHAINE08 %}
+        <p style="margin: 5px;">Code tracking <span style="font-weight: bold;">{{piece.CHAINE08}}</span></p>
+        {% endif %}
+        <p style="margin: 5px;">Ref: <span style="font-weight: bold;">{{ref}}</span></p>
+    </div>
+    
+</body>
+</html>

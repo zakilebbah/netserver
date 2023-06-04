@@ -1,0 +1,21 @@
+<html>
+
+<body>
+    <h1>Articles</h1>
+    <a href="{{url_for('web_newArticle')}}">
+        <button>Add Article</button>
+    </a>
+    <ol>
+        {% for article in articles %}
+        <li> {{article.ref_art}} named {{article.designation}}</li>
+        <a href="{{url_for('web_editArticle', ref_art = article.ref_art )}}">
+        Edit
+        </a>
+        <a href="{{url_for('web_deleteArticle', ref_art = article.ref_art )}}" style="margin-left: 10px;">
+        Delete
+        </a>
+        <br> <br> {% endfor %}
+    </ol>
+</body>
+
+</html>

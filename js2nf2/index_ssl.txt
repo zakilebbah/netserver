@@ -1,0 +1,62 @@
+const express = require('express')
+const bytenode = require('bytenode');
+const bodyParser = require('body-parser')
+const app = express()
+const port = 3001
+const https = require("https");
+const fs = require("fs");
+const cors = require("cors");
+//app.use(function(request, response, next) {
+//    if (!request.secure) {
+//       return response.redirect("https://" + request.headers.host  + request.url);
+//    }
+//    next();
+//})
+app.use(bodyParser.json())
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+)
+app.use(cors(
+{
+   // origin:'https://netmobile.web.app', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+))
+
+https
+  .createServer(
+   {
+      key: fs.readFileSync("/home/oransoft/mahalates_ssl/HSSL-61cb0694d98e9.key"),
+      cert: fs.readFileSync("/home/oransoft/mahalates_ssl/mahalates_com.crt"),
+    },
+  app)
+  .listen(port, ()=>{
+    console.log('server is runing at port 4000')
+  });
+
+//app.use((req, res, next) => {
+//  if (!isSecure(req)) {
+//    res.redirect(301, `https://${req.headers.host}${req.url}`);
+//  } else {
+//    next();
+//  }
+//});
+let http = require('http').Server(app);
+
+http.listen(3000, function() {
+ console.log('API server listening on port ' + 3001);
+});
+process.env.TZ = "Africa/Algiers";
+app.get('/', (request, response) => {
+    response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+function isSecure(req) {
+  //console.log(req);
+  if (req.headers['x-forwarded-proto']) {
+    return req.headers['x-forwarded-proto'] === 'https';
+  }
+  return req.secure;
+};

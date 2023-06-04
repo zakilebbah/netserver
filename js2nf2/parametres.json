@@ -1,0 +1,73 @@
+
+[
+    {
+        "SERVER": "localhost",
+        "PG_BD": "hamaza2021",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey2",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "localhost",
+        "PG_BD": "orientpalace",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey2",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "localhost",
+        "PG_BD": "look2",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey2",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "localhost",
+        "PG_BD": "os",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey2",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "localhost",
+        "PG_BD": "demo",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey2",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "192.168.1.15",
+        "PG_BD": "rebahi00",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "192.168.1.8",
+        "PG_BD": "inaya2023",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "192.168.1.15",
+        "PG_BD": "E:/OranSoft/data/nf2test/2023-01-17-BDD BIG-JOY/BIG-STOCKJOY1-4Go.FDB",
+        "PG_username": "SYSDBA",
+        "PG_passe": "masterkey",
+        "PG_Port": 3050
+    },
+    {
+        "SERVER": "192.168.1.15",
+        "PG_BD": "dkh2022",
+        "PG_username": "postgres",
+        "PG_passe": "masterkey",
+        "PG_Port": 5432
+    },
+    {
+        "SERVER": "192.168.1.8",
+        "PG_BD": "K:/OranSoft/data/NF2/BIG-STOCKJOY1-4Go.FDB",
+        "PG_username": "SYSDBA",
+        "PG_passe": "masterkey",
+        "PG_Port": 3050
+    }
+]

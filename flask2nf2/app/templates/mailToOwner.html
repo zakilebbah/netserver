@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoutiqueFact</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container" style="border: 1px solid gray;
+    margin: auto;
+    width: 620px;">
+        <div style="padding: 10px;text-align: center;border-bottom: 1px solid gray;">
+            <img style="margin: auto;width: 180px;height: 120px;object-fit: contain;object-position: 50% 50%;border-radius: 5px 5px 5px 5px;border: 0px solid #000000;" src={{logo}} alt="logo">
+        </div>
+        <div class="title">
+            <p style="margin: 5px;">email: {{user.EMAIL}}</p>
+        </div>
+        <h2 style="font-weight: bold;margin: 5px;">Commande</h2>
+        <table style="border: 1px solid gray;text-align: center;border-spacing: 5px;margin: auto;width: 95%;">
+            <tr>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;"></th>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;">PRODUIT</th>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;width: 90px;" >QUANTITE</th>
+                <th style="text-align: center;margin: 10px;background-color: gainsboro;width: 90px;" >PRIX</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td style="text-align: center;margin: 10px;"><img src={{product.PRODUCT.images[0]}} alt={{product.PRODUCT.DESIGNATION}} style="width: 100px;height: 100px;object-fit: contain;object-position: 50% 50%;display:block;margin:auto;"></td>
+                <td style="text-align: center;margin: 10px;max-width: 250px;"><p style="white-space: initial;overflow: hidden;margin: 5px;">{{ product.PRODUCT.DESIGNATION }}</p></td>
+                <td style="text-align: center;margin: 10px;"><p style="margin: 5px;">{{ product.QTE.qte }}</p></td>
+                <td style="text-align: center;margin: 10px;"><p style="margin: 5px;">{{ product.PRICE }} DA</p></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if piece.MONTANT15 %}
+        <p style="margin: 5px;">Sous Total: <span style="font-weight: bold;">{{piece.MONTANT15}}</span></p>
+        {% endif %}
+        {% if piece.CODE_MODE_LIV == 'YALID' %}
+        <p style="margin: 5px;">Livraison par <span style="font-weight: bold;">Yalidine</span></p>
+        {% endif %}
+        {% if piece.MONTANT07 %}
+        <p style="margin: 5px;">Frais livraison: <span style="font-weight: bold;">{{piece.MONTANT07}}</span></p>
+        {% endif %}
+        <p style="margin: 5px;">TOTAL: <span style="font-weight: bold;">{{piece.MONTANT}}</span></p>
+        <!-- <p style="margin: 5px;">Code: <span style="font-weight: bold;">{{code}}</span></p> -->
+        {% if piece.CHAINE08 %}
+        <p style="margin: 5px;">Code tracking <span style="font-weight: bold;">{{piece.CHAINE08}}</span></p>
+        {% endif %}
+        <p style="margin: 5px;">Ref: <span style="font-weight: bold;">{{ref}}</span></p>
+        <span style="margin: 3px;">Informations clients:</span>
+        {% if user.CODE_TIERS %}
+        <p style="margin: 5px 5px 5px 10px;">Code: {{user.CODE_TIERS}}</p>
+        {% endif %}
+        {% if user.USERNAMENET %}
+        <p style="margin: 5px 5px 5px 10px;">Nom: {{user.USERNAMENET}} </p>
+        {% endif %}
+        {% if user.PRENOMNET %}
+        <p style="margin: 5px 5px 5px 10px;">Prenom: {{user.PRENOMNET}}</p>
+        {% endif %}
+        {% if user.RAISON_SOCIALE %}
+        <p style="margin: 5px 5px 5px 10px;">Raison sociale: {{user.RAISON_SOCIALE}}</p>
+        {% endif %}
+        {% if user.ADRESSE %}
+        <p style="margin: 5px 5px 5px 10px;">Adress: {{user.ADRESSE}}</p>
+        {% endif %}
+        {% if user.VILLE %}
+        <p style="margin: 5px 5px 5px 10px;">Ville: {{user.VILLE}}</p>
+        {% endif %}
+        {% if user.TEL %}
+        <p style="margin: 5px 5px 5px 10px;">Tel: {{user.TEL}}</p>
+        {% endif %}
+        {% if user.MATFISC %}
+        <p style="margin: 5px 5px 5px 10px;">Matfisc: {{user.MATFISC}}</p>
+        {% endif %}
+        {% if user.NIS %}
+        <p style="margin: 5px 5px 5px 10px;">Nis: {{user.NIS}}</p>
+        {% endif %}
+        <div style="padding: 10px;text-align: center;">
+            <img style="margin: auto;height: 160px;object-fit: contain;object-position: 50% 50%;" src="{{src}}" alt="code bare">
+        </div>
+    </div>
+    
+</body>
+</html>

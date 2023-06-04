@@ -1,0 +1,15 @@
+flask_sqlalchemy
+flask_migrate
+fdb
+flask_marshmallow
+flask_cors
+flask_httpauth
+flask_login
+PyJWT
+passlib
+flask_bcrypt
+yagmail
+pdfkit
+psycopg2-binary
+image
+weasyprint
