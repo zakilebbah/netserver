@@ -3127,31 +3127,7 @@ const getCodeSite = (request, response) => {
     }
     
 }
-const printPos = async (request, response) => {
-    const { ThermalPrinter, PrinterTypes, CharacterSet, BreakLine } = require('node-thermal-printer');
 
-    let printer = new ThermalPrinter({
-    type: PrinterTypes.TANCA,                                  // Printer type: 'star' or 'epson'
-    interface: 'tcp://192.168.1.101:9100',                       // Printer interface
-    characterSet: CharacterSet.PC863_CANADIAN_FRENCH,                      // Printer character set - default: SLOVENIA
-    removeSpecialCharacters: false,                           // Removes special characters - default: false
-    lineCharacter: "=",                                       // Set character for lines - default: "-"
-    breakLine: BreakLine.WORD,                                // Break line after WORD or CHARACTERS. Disabled with NONE - default: WORD
-    options:{                                                 // Additional options
-        timeout: 5000                                           // Connection timeout (ms) [applicable only for network printers] - default: 3000
-    }
-    });
-
-    let isConnected = await printer.isPrinterConnected();
-    let execute = await printer.execute();         // Check if printer is connected, return bool of status
-    printer.beep(); 
-    printer.println("Hello World");                             // Append text with new line
-    printer.openCashDrawer();
-    printer.execute()                                   // Kick the cash drawer
-    printer.cut(); 
-    printer.execute()
-    response.status(200).json(isConnected)                                             // Cuts the paper (if printer only supports one mode use this)
-}
 module.exports = {
     getArticlesTest,
     sendGps,
@@ -3201,5 +3177,4 @@ module.exports = {
     getParametre,
     getCodeSite,
     reqSelect,
-    printPos
 }
