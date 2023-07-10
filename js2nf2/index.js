@@ -70,6 +70,7 @@ app.post('/api-famille-refArt', db.getFamilleRefArt)
 app.post('/api-parametre', db.getParametre)
 app.post('/api-code-site', db.getCodeSite)
 app.post('/api-reqselect', db.reqSelect)
+app.post('/api-pos-printer', db.printPos)
 
 
 

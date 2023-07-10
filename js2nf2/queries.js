@@ -743,8 +743,7 @@ function etats_request(etats_values, etat0) {
             (datepiece >= '${etats_values['DATE_MIN']}')  and (datepiece <= '${etats_values['DATE_MAX']}')) NUMBER_BON_LIVRAISON,
         (select count(*) from piece where code_type_piece = 'PC_VE_PF' and
             (datepiece >= '${etats_values['DATE_MIN']}')  and (datepiece <= '${etats_values['DATE_MAX']}')) NUMBER_PROFORMA
-        from article
-        $LIMIT1
+        from article $LIMIT1
         `,
             "SQL_FIELDS": `
         `,
@@ -800,7 +799,7 @@ function etats_request(etats_values, etat0) {
     // console.log(SQL_OFFSETS);
     //let sprintf = require('sprintf-js').sprintf;
     // return sprintf(etats_request0[etat0]['SQL_REQUEST'], SQL_FIELDS);
-    var sql0 = etats_request0[etat0]['SQL_REQUEST'].replace('$SQLFIELDS', SQL_FIELDS).replace('$SQLOFFSETS', SQL_OFFSETS);
+    var sql0 = etats_request0[etat0]['SQL_REQUEST'].replace('$SQLFIELDS', SQL_FIELDS).replace('$SQLOFFSETS', SQL_OFFSETS).replace('$LIMIT1', LIMIT1);
     // console.log('SQL:');
     // console.log(sql0);
     return sql0;
@@ -1066,7 +1065,8 @@ const insert = (request, response) => {
         if (configData[BD]['PG_BD'].includes('/')) {
             List$00.push(`?`);
             if (i.includes('date') || i.includes('DATE')) {
-                columnsList.push(data[i].toString().replaceAll(':', '.').replaceAll('T', ' ').slice(0, -3));
+                // columnsList.push(data[i].toString().replaceAll(':', '.').replaceAll('T', ' ').slice(0, -3));
+                columnsList.push(data[i].toString().replace(':', '.').replace('T', ' ').slice(0, -3));
             } else {
                 columnsList.push(data[i]);
             }
@@ -1131,7 +1131,8 @@ const update = (request, response) => {
             if (typeof data[i] == 'string') {
                 if (i.includes('date') || i.includes('DATE')) {
                     // console.log('TEST ' + data[i].replaceAll(':', '.').slice(0, -3));
-                    val00 = `'${data[i].toString().replaceAll(':', '.').replaceAll('T', ' ').slice(0, -3)}'`;
+                    // val00 = `'${data[i].toString().replaceAll(':', '.').replaceAll('T', ' ').slice(0, -3)}'`;
+                    val00 = `'${data[i].toString().replace(':', '.').replace('T', ' ').slice(0, -3)}'`;
                 } else {
                     val00 = `'${data[i]}'`;
                 }
@@ -2316,7 +2317,7 @@ const getEtats = (request, response) => {
 const tryConnect = (request, response) => {
     const { BD, VERSION } = request.body;
     if (configData[BD] != null) {
-        var queryText = "select * from article"
+        var queryText = "select REF_ART from article"
         if (configData[BD]['PG_BD'].includes('/')) {
             // console.log(firebirdOptions[BD])
             queryText += ' rows 1 to 1'
@@ -3087,7 +3088,7 @@ const getParametre = (request, response) => {
                     console.log(error)
                     response.status(500).send(error.message)
                 } else {
-                    // console.log("Test getParametre: " + results.rows[0]['valeur'].toString());
+                    // onsole.log("Test getParametre: " + results.rows[0]['valeur'].toString());
                     response.status(200).json(results.rows)
                 };
             });
@@ -3124,7 +3125,32 @@ const getCodeSite = (request, response) => {
                 };
             });
     }
+    
+}
+const printPos = async (request, response) => {
+    const { ThermalPrinter, PrinterTypes, CharacterSet, BreakLine } = require('node-thermal-printer');
 
+    let printer = new ThermalPrinter({
+    type: PrinterTypes.TANCA,                                  // Printer type: 'star' or 'epson'
+    interface: 'tcp://192.168.1.101:9100',                       // Printer interface
+    characterSet: CharacterSet.PC863_CANADIAN_FRENCH,                      // Printer character set - default: SLOVENIA
+    removeSpecialCharacters: false,                           // Removes special characters - default: false
+    lineCharacter: "=",                                       // Set character for lines - default: "-"
+    breakLine: BreakLine.WORD,                                // Break line after WORD or CHARACTERS. Disabled with NONE - default: WORD
+    options:{                                                 // Additional options
+        timeout: 5000                                           // Connection timeout (ms) [applicable only for network printers] - default: 3000
+    }
+    });
+
+    let isConnected = await printer.isPrinterConnected();
+    let execute = await printer.execute();         // Check if printer is connected, return bool of status
+    printer.beep(); 
+    printer.println("Hello World");                             // Append text with new line
+    printer.openCashDrawer();
+    printer.execute()                                   // Kick the cash drawer
+    printer.cut(); 
+    printer.execute()
+    response.status(200).json(isConnected)                                             // Cuts the paper (if printer only supports one mode use this)
 }
 module.exports = {
     getArticlesTest,
@@ -3174,5 +3200,6 @@ module.exports = {
     getFamilleRefArt,
     getParametre,
     getCodeSite,
-    reqSelect
+    reqSelect,
+    printPos
 }
